@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Копилка">
+<meta name="theme-color" content="#0a0a0a">
+<title>Копилка</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;700&family=Inter:wght@400;500&display=swap');
+  :root{--bg:#0a0a0a;--surface:#141414;--surface2:#1c1c1c;--border:#2a2a2a;--text:#f0f0f0;--muted:#666;--hint:#444;--green:#00e676;--green-dim:#00e67620;--green-soft:#00e67610;--amber:#ffb300;--red:#ff4444;--radius:16px;--radius-sm:10px}
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+  body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding-bottom:60px}
+  .screen{display:none}.screen.active{display:block}
+  header{padding:20px 20px 0;display:flex;justify-content:space-between;align-items:center}
+  .logo{font-family:'Unbounded',sans-serif;font-size:11px;font-weight:600;color:var(--muted);letter-spacing:.15em;text-transform:uppercase}
+  .btn-icon{background:none;border:1px solid var(--border);border-radius:50%;width:36px;height:36px;color:var(--muted);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+  .btn-icon:active{background:var(--surface2)}
+  .main{padding:16px 20px}
+
+  /* TOTAL */
+  .total-card{background:linear-gradient(135deg,#0d1f14 0%,#0a1a20 100%);border:1px solid #1a3a22;border-radius:var(--radius);padding:24px;margin-bottom:12px}
+  .total-label{font-family:'Unbounded',sans-serif;font-size:9px;letter-spacing:.18em;color:#00e67699;text-transform:uppercase;margin-bottom:8px}
+  .total-amount{font-family:'Unbounded',sans-serif;font-size:36px;font-weight:700;color:var(--green);letter-spacing:-.02em;line-height:1;margin-bottom:6px}
+  .total-sub{font-size:12px;color:var(--muted);margin-bottom:20px}
+  .prog-track{background:var(--hint);border-radius:4px;height:6px;position:relative;margin-bottom:6px;overflow:visible}
+  .prog-fill{height:6px;border-radius:4px;background:linear-gradient(90deg,#00b248,#00e676);transition:width .5s;position:relative}
+  .prog-fill::after{content:'';position:absolute;right:-1px;top:-2px;width:10px;height:10px;background:var(--green);border-radius:50%;box-shadow:0 0 8px var(--green)}
+  .prog-marker{position:absolute;top:-4px;width:2px;height:14px;background:#ffffff30;border-radius:1px}
+  .prog-labels{display:flex;justify-content:space-between;font-size:9px;color:var(--hint);margin-top:2px}
+  .goals{margin-top:16px;display:flex;flex-direction:column;gap:8px}
+  .goal-row{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:#ffffff08;border-radius:var(--radius-sm);border:1px solid transparent}
+  .goal-row.done{border-color:#00e67630;background:var(--green-soft)}
+  .goal-left{display:flex;align-items:center;gap:10px}
+  .goal-name{font-size:13px;color:var(--text)}
+  .goal-right{font-size:12px;color:var(--muted);text-align:right}
+  .goal-right.done{color:var(--green);font-weight:500}
+
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:12px}
+  .card-title{font-family:'Unbounded',sans-serif;font-size:10px;letter-spacing:.12em;color:var(--muted);text-transform:uppercase;margin-bottom:16px}
+
+  .inp-wrap{position:relative;margin-bottom:12px}
+  .inp-suffix{position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:13px;color:var(--muted);pointer-events:none;font-family:'Unbounded',sans-serif;font-weight:600}
+  input[type=number]{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font-family:'Unbounded',sans-serif;font-size:24px;font-weight:600;padding:14px 80px 14px 16px;outline:none;-moz-appearance:textfield}
+  input[type=number]::-webkit-outer-spin-button,input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none}
+  input[type=number]:focus{border-color:var(--green)}
+  .btn-add{width:100%;padding:16px;background:var(--green);color:#000;border:none;border-radius:var(--radius-sm);font-family:'Unbounded',sans-serif;font-size:13px;font-weight:700;cursor:pointer}
+  .btn-add:active{opacity:.85;transform:scale(.98)}
+  .msg-box{margin-top:12px;padding:12px 14px;background:var(--surface2);border-radius:var(--radius-sm);font-size:13px;color:var(--muted);min-height:42px;border-left:3px solid var(--border)}
+  .msg-box.ok{border-left-color:var(--green);color:var(--text)}
+  .msg-box.warn{border-left-color:var(--amber);color:var(--text)}
+
+  .basket-item{padding:16px 0;border-bottom:1px solid var(--border)}
+  .basket-item:last-child{border-bottom:none}
+  .basket-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+  .basket-left{flex:1;min-width:0}
+  .basket-name{font-size:14px;font-weight:500;color:var(--text);margin-bottom:3px}
+  .basket-pending{font-size:12px;color:var(--muted)}
+  .basket-right{text-align:right;flex-shrink:0}
+  .basket-amount{font-family:'Unbounded',sans-serif;font-size:16px;font-weight:600;color:var(--text)}
+  .basket-conv{font-size:11px;color:var(--muted);margin-top:2px}
+  .badge{display:inline-flex;align-items:center;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:500;margin-top:6px}
+  .badge-go{background:var(--green-dim);color:var(--green)}
+  .badge-wait{background:#ffffff08;color:var(--hint)}
+  .btn-fix{margin-top:8px;padding:8px 16px;background:var(--green-dim);color:var(--green);border:1px solid #00e67630;border-radius:var(--radius-sm);font-family:'Unbounded',sans-serif;font-size:11px;font-weight:600;cursor:pointer;display:block}
+  .btn-fix:active{opacity:.8}
+
+  .rates-grid{display:grid;gap:8px}
+  .rate-cell{background:var(--surface2);border-radius:var(--radius-sm);padding:10px 12px;text-align:center}
+  .rate-name{font-size:10px;color:var(--hint);margin-bottom:4px}
+  .rate-val{font-family:'Unbounded',sans-serif;font-size:12px;font-weight:600;color:var(--amber)}
+
+  .hist-list{max-height:300px;overflow-y:auto}
+  .hist-list::-webkit-scrollbar{width:3px}
+  .hist-list::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+  .hist-row{padding:12px 0;border-bottom:1px solid var(--border)}
+  .hist-row:last-child{border-bottom:none}
+  .hist-top{display:flex;align-items:flex-start;gap:8px}
+  .hist-info{flex:1}
+  .hist-date{font-size:11px;color:var(--hint)}
+  .hist-amount{font-size:13px;color:var(--text);font-weight:500}
+  .hist-fixed{font-size:11px;color:var(--green);margin-top:2px}
+  .hist-actions{display:flex;gap:6px;flex-shrink:0}
+  .btn-sm{padding:6px 11px;background:#ffffff08;border:1px solid var(--border);color:var(--muted);border-radius:8px;font-size:12px;cursor:pointer}
+  .btn-sm-red{padding:6px 11px;background:#ff444410;border:1px solid #ff444420;color:#ff6666;border-radius:8px;font-size:12px;cursor:pointer}
+  .edit-block{margin-top:10px;padding:12px;background:var(--surface2);border-radius:var(--radius-sm);border:1px solid var(--border)}
+  .edit-note{font-size:11px;color:var(--amber);margin-bottom:8px}
+  .edit-inp{width:100%;background:var(--bg);border:1px solid var(--green);border-radius:8px;color:var(--text);font-family:'Unbounded',sans-serif;font-size:18px;font-weight:600;padding:10px 14px;outline:none;margin-bottom:8px;-moz-appearance:textfield}
+  .edit-inp::-webkit-outer-spin-button,.edit-inp::-webkit-inner-spin-button{-webkit-appearance:none}
+  .edit-row{display:flex;gap:8px}
+  .btn-green{flex:1;padding:9px;background:var(--green);color:#000;border:none;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer}
+  .btn-gray{flex:1;padding:9px;background:#ffffff08;border:1px solid var(--border);color:var(--muted);border-radius:8px;font-size:12px;cursor:pointer}
+  .btn-reset{width:100%;padding:12px;background:transparent;border:1px solid #ff444420;color:var(--red);border-radius:var(--radius-sm);font-size:12px;cursor:pointer;margin-top:8px}
+  .empty{font-size:12px;color:var(--hint);text-align:center;padding:16px 0}
+
+  /* SETTINGS */
+  .settings-wrap{padding:20px}
+  .settings-hdr{display:flex;align-items:center;gap:12px;margin-bottom:24px}
+  .settings-ttl{font-family:'Unbounded',sans-serif;font-size:16px;font-weight:700;color:var(--text)}
+  .scard{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:12px}
+  .scard-title{font-family:'Unbounded',sans-serif;font-size:10px;letter-spacing:.12em;color:var(--muted);text-transform:uppercase;margin-bottom:16px}
+  .sfield{margin-bottom:14px}
+  .sfield:last-child{margin-bottom:0}
+  .sfield-label{font-size:12px;color:var(--hint);margin-bottom:6px}
+  .srow{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+  .srow:last-child{margin-bottom:0}
+  .srow-label{font-size:13px;color:var(--muted);flex:1}
+  .s-text-inp{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font-size:14px;font-family:'Inter',sans-serif;padding:11px 14px;outline:none}
+  .s-text-inp:focus{border-color:var(--green)}
+  .s-num-inp{width:80px;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font-size:14px;font-weight:600;font-family:'Inter',sans-serif;padding:11px 12px;outline:none;text-align:center;-moz-appearance:textfield}
+  .s-num-inp::-webkit-outer-spin-button,.s-num-inp::-webkit-inner-spin-button{-webkit-appearance:none}
+  .s-num-inp:focus{border-color:var(--green)}
+  .hint-txt{font-size:11px;color:var(--hint);margin-top:6px;line-height:1.5}
+
+  select{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font-size:14px;font-family:'Inter',sans-serif;padding:11px 36px 11px 14px;outline:none;appearance:none;-webkit-appearance:none;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23666' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center}
+  select:focus{border-color:var(--green)}
+  select option{background:#1c1c1c;color:var(--text)}
+
+  .basket-ed{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px;margin-bottom:10px;position:relative}
+  .basket-ed-title{font-size:12px;font-weight:600;color:var(--text);margin-bottom:12px;padding-right:44px}
+  .btn-rm{position:absolute;top:12px;right:12px;background:#ff444415;border:1px solid #ff444430;color:var(--red);border-radius:6px;font-size:11px;padding:5px 9px;cursor:pointer}
+  .be-row{margin-bottom:10px}
+  .be-row:last-child{margin-bottom:0}
+  .be-label{font-size:11px;color:var(--hint);margin-bottom:5px}
+  .be-2col{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:0}
+
+  .goal-ed{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px;margin-bottom:10px;position:relative}
+  .goal-ed-title{font-size:12px;font-weight:600;color:var(--text);margin-bottom:12px;padding-right:44px}
+  .ge-label{font-size:11px;color:var(--hint);margin-bottom:5px}
+
+  .btn-add-item{width:100%;padding:11px;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--muted);font-size:13px;cursor:pointer;margin-top:4px}
+  .btn-add-item:active{background:var(--bg)}
+  .btn-save-s{width:100%;padding:16px;background:var(--green);color:#000;border:none;border-radius:var(--radius-sm);font-family:'Unbounded',sans-serif;font-size:13px;font-weight:700;cursor:pointer;margin-top:4px}
+  .btn-save-s:active{opacity:.85}
+
+  /* inline select for basket editors */
+  .be-select{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:13px;font-family:'Inter',sans-serif;padding:9px 32px 9px 10px;outline:none;appearance:none;-webkit-appearance:none;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='7' viewBox='0 0 10 7'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23666' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center}
+  .be-select:focus{border-color:var(--green)}
+  .be-select option{background:#1c1c1c}
+</style>
+</head>
+<body>
+
+<!-- MAIN -->
+<div class="screen active" id="screen-main">
+  <header>
+    <div class="logo" id="hdr-name">копилка</div>
+    <button class="btn-icon" onclick="openSettings()">⚙️</button>
+  </header>
+  <div class="main">
+
+    <!-- empty state -->
+    <div id="empty-state" class="hidden">
+      <div style="text-align:center;padding:60px 20px">
+        <div style="font-size:48px;margin-bottom:16px">🪙</div>
+        <div style="font-family:'Unbounded',sans-serif;font-size:16px;font-weight:700;color:var(--text);margin-bottom:10px">Настрой копилку</div>
+        <div style="font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:28px">Выбери валюты, процент откладывания и свои финансовые цели</div>
+        <button class="btn-add" onclick="openSettings()" style="max-width:260px;margin:0 auto;display:block">Настроить</button>
+      </div>
+    </div>
+
+    <div id="main-content">
+      <div class="total-card">
+        <div class="total-label">Общая подушка</div>
+        <div class="total-amount" id="total-val">0</div>
+        <div class="total-sub" id="total-sub"></div>
+        <div class="prog-track" id="prog-track">
+          <div class="prog-fill" id="prog-fill" style="width:0%"></div>
+        </div>
+        <div class="prog-labels" id="prog-labels"></div>
+        <div class="goals" id="goals-list"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Добавить выплату</div>
+        <div class="inp-wrap">
+          <input type="number" id="pay-inp" placeholder="0" inputmode="numeric">
+          <span class="inp-suffix" id="pay-suffix"></span>
+        </div>
+        <button class="btn-add" onclick="addPay()">+ <span id="pct-lbl">10</span>% в корзины</button>
+        <div class="msg-box" id="msg">Введи сумму выплаты</div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Корзины</div>
+        <div id="baskets-list"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Курсы</div>
+        <div id="rates-wrap"></div>
+        <div style="font-size:11px;color:var(--hint);margin-top:10px;text-align:center" id="rates-date"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">История</div>
+        <div class="hist-list" id="hist"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title" style="color:#ff444455">Сброс</div>
+        <div style="font-size:12px;color:var(--hint);margin-bottom:4px">Удалит накопления и историю. Настройки сохранятся.</div>
+        <button class="btn-reset" onclick="resetData()">Сбросить накопления</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- SETTINGS -->
+<div class="screen" id="screen-settings">
+  <div class="settings-wrap">
+    <div class="settings-hdr">
+      <button class="btn-icon" id="btn-back-settings" onclick="closeSettings()">←</button>
+      <div class="settings-ttl">Настройки</div>
+    </div>
+
+    <div class="scard">
+      <div class="scard-title">Общее</div>
+      <div class="sfield">
+        <div class="sfield-label">Название копилки</div>
+        <input type="text" id="s-name" class="s-text-inp" placeholder="моя копилка">
+      </div>
+      <div class="srow" style="margin-top:14px">
+        <span class="srow-label">Процент откладывания</span>
+        <input type="number" id="s-pct" class="s-num-inp" min="1" max="100" step="0.5" placeholder="10">
+        <span style="color:var(--muted);font-size:14px">%</span>
+      </div>
+      <div class="sfield" style="margin-top:14px">
+        <div class="sfield-label">В чём получаешь выплаты</div>
+        <select id="s-base"></select>
+      </div>
+      <div class="sfield" style="margin-top:14px">
+        <div class="sfield-label">Валюта для подсчёта общей суммы и целей</div>
+        <select id="s-goal-cur"></select>
+      </div>
+    </div>
+
+    <div class="scard">
+      <div class="scard-title">Корзины (до 5)</div>
+      <div id="baskets-ed"></div>
+      <button class="btn-add-item" id="btn-add-basket" onclick="addBasketEd()">+ Добавить корзину</button>
+    </div>
+
+    <div class="scard">
+      <div class="scard-title">Цели (до 5)</div>
+      <div id="goals-ed"></div>
+      <button class="btn-add-item" id="btn-add-goal" onclick="addGoalEd()">+ Добавить цель</button>
+    </div>
+
+    <button class="btn-save-s" onclick="saveSettings()">Сохранить</button>
+    <div style="height:40px"></div>
+  </div>
+</div>
+
+<script>
+const CURRENCIES=[
+  {code:'RUB',name:'Российский рубль'},
+  {code:'USD',name:'Доллар США'},
+  {code:'EUR',name:'Евро'},
+  {code:'CNY',name:'Китайский юань'},
+  {code:'USDT',name:'USDT (Tether)'},
+  {code:'KZT',name:'Казахстанский тенге'},
+  {code:'GEL',name:'Грузинский лари'},
+  {code:'TRY',name:'Турецкая лира'},
+  {code:'AMD',name:'Армянский драм'},
+  {code:'AZN',name:'Азербайджанский манат'},
+  {code:'BYN',name:'Белорусский рубль'},
+  {code:'UAH',name:'Украинская гривна'},
+  {code:'UZS',name:'Узбекский сум'},
+  {code:'GBP',name:'Фунт стерлингов'},
+  {code:'CHF',name:'Швейцарский франк'},
+  {code:'JPY',name:'Японская иена'},
+  {code:'AED',name:'Дирхам ОАЭ'},
+  {code:'THB',name:'Тайский бат'},
+  {code:'IDR',name:'Индонезийская рупия'},
+  {code:'INR',name:'Индийская рупия'},
+  {code:'BTC',name:'Bitcoin'},
+  {code:'ETH',name:'Ethereum'},
+];
+
+const OPTS = CURRENCIES.map(c=>`<option value="${c.code}">${c.code} — ${c.name}</option>`).join('');
+const OPTS_BG = CURRENCIES.map(c=>`<option value="${c.code}" style="background:#1c1c1c">${c.code} — ${c.name}</option>`).join('');
+
+function buildSelect(id, selected) {
+  const el=document.getElementById(id);
+  if(!el) return;
+  el.innerHTML=CURRENCIES.map(c=>`<option value="${c.code}"${c.code===selected?' selected':''}>${c.code} — ${c.name}</option>`).join('');
+}
+
+function inlineSelect(id, selected) {
+  return `<select id="${id}" class="be-select">`+
+    CURRENCIES.map(c=>`<option value="${c.code}"${c.code===selected?' selected':''}>${c.code} — ${c.name}</option>`).join('')+
+    `</select>`;
+}
+
+// ============================================================
+// STATE
+// ============================================================
+let CFG = null; // null = not configured yet
+let RATES = {};
+let ratesDate = null;
+let DATA = { baskets:[], history:[] };
+let editingIdx = null;
+let edBaskets = [];
+let edGoals = [];
+let isFirstSetup = false;
+
+function save() {
+  try {
+    if(CFG) localStorage.setItem('sv_cfg', JSON.stringify(CFG));
+    localStorage.setItem('sv_data', JSON.stringify(DATA));
+    localStorage.setItem('sv_rates', JSON.stringify({rates:RATES,date:ratesDate}));
+  } catch(e){}
+}
+
+function load() {
+  try {
+    const c=localStorage.getItem('sv_cfg'); if(c) CFG=JSON.parse(c);
+    const d=localStorage.getItem('sv_data'); if(d) DATA=JSON.parse(d);
+    const r=localStorage.getItem('sv_rates'); if(r){const p=JSON.parse(r);RATES=p.rates||{};ratesDate=p.date||null;}
+  } catch(e){}
+}
+
+function ensureBaskets() {
+  if(!CFG) return;
+  while(DATA.baskets.length<CFG.baskets.length) DATA.baskets.push({pending:0,saved:0});
+  DATA.baskets=DATA.baskets.slice(0,CFG.baskets.length);
+}
+
+// ============================================================
+// RATES
+// ============================================================
+async function fetchRates() {
+  const now=Date.now();
+  if(ratesDate&&now-ratesDate<86400000&&Object.keys(RATES).length>0) return true;
+  try {
+    const res=await fetch('https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/usd.json');
+    const d=await res.json();
+    if(!d.usd) return false;
+    RATES={'USD':1,'USDT':1};
+    Object.entries(d.usd).forEach(([code,perUsd])=>{if(perUsd>0) RATES[code.toUpperCase()]=1/perUsd;});
+    ratesDate=now; save(); return true;
+  } catch(e){return false;}
+}
+
+function convert(amount,from,to) {
+  const f=from.toUpperCase(),t=to.toUpperCase();
+  if(f===t) return amount;
+  const fUsd=RATES[f],tUsd=RATES[t];
+  if(!fUsd||!tUsd) return amount;
+  return amount*fUsd/tUsd;
+}
+
+function unitsFromPending(i) {
+  const b=CFG.baskets[i];
+  const cost=convert(1,b.code,CFG.baseCurrency);
+  if(!cost||cost<=0) return 0;
+  return Math.floor(DATA.baskets[i].pending/cost);
+}
+
+function totalInGoalCurrency() {
+  if(!CFG) return 0;
+  return DATA.baskets.reduce((sum,b,i)=>sum+convert(b.saved,CFG.baskets[i].code,CFG.goalCurrency),0);
+}
+
+// ============================================================
+// RENDER
+// ============================================================
+function fmt(n){return Math.round(n).toLocaleString('ru');}
+function fmtD(n,d=2){return parseFloat(n.toFixed(d)).toLocaleString('ru');}
+
+function render() {
+  if(!CFG) {
+    document.getElementById('empty-state').classList.remove('hidden');
+    document.getElementById('main-content').classList.add('hidden');
+    return;
+  }
+  document.getElementById('empty-state').classList.add('hidden');
+  document.getElementById('main-content').classList.remove('hidden');
+
+  ensureBaskets();
+  const total=totalInGoalCurrency();
+  const goals=[...CFG.goals].sort((a,b)=>a.amount-b.amount);
+  const maxG=goals[goals.length-1]?.amount||1;
+  const gc=CFG.goalCurrency;
+
+  document.getElementById('hdr-name').textContent=CFG.appName||'копилка';
+  document.getElementById('pct-lbl').textContent=CFG.pct;
+  document.getElementById('pay-suffix').textContent=CFG.baseCurrency;
+
+  document.getElementById('total-val').textContent=fmtD(total,0)+' '+gc;
+  const next=goals.find(g=>g.amount>total);
+  document.getElementById('total-sub').textContent=next
+    ?`до «${next.name}»: осталось ${fmtD(Math.max(next.amount-total,0),0)} ${gc}`
+    :(goals.length?'🎉 Все цели достигнуты!':'');
+
+  document.getElementById('prog-fill').style.width=Math.min(total/maxG*100,100)+'%';
+  const track=document.getElementById('prog-track');
+  track.querySelectorAll('.prog-marker').forEach(m=>m.remove());
+  goals.slice(0,-1).forEach(g=>{
+    const m=document.createElement('div');m.className='prog-marker';
+    m.style.left=(g.amount/maxG*100)+'%';track.appendChild(m);
+  });
+  document.getElementById('prog-labels').innerHTML=
+    ['0',...goals.map(g=>g.amount>=1000?Math.round(g.amount/1000)+'k '+gc:g.amount+' '+gc)].map(t=>`<span>${t}</span>`).join('');
+
+  document.getElementById('goals-list').innerHTML=goals.length?goals.map(g=>{
+    const done=total>=g.amount;
+    return`<div class="goal-row${done?' done':''}">
+      <div class="goal-left"><span style="font-size:18px">${g.icon||'🎯'}</span><span class="goal-name">${g.name}</span></div>
+      <div class="goal-right${done?' done':''}">${done?'✓ Достигнуто':fmtD(Math.max(g.amount-total,0),0)+' '+gc+' осталось'}</div>
+    </div>`;
+  }).join(''):'';
+
+  document.getElementById('baskets-list').innerHTML=CFG.baskets.map((b,i)=>{
+    const units=unitsFromPending(i);
+    const canBuy=units>=b.threshold;
+    const savedInGoal=fmtD(convert(DATA.baskets[i].saved,b.code,gc),0);
+    const need=Math.max(b.threshold-units,0);
+    return`<div class="basket-item">
+      <div class="basket-head">
+        <div class="basket-left">
+          <div class="basket-name">${b.name} (${b.code})</div>
+          <div class="basket-pending">Копится: ${fmtD(DATA.baskets[i].pending,2)} ${CFG.baseCurrency}</div>
+          <div class="${canBuy?'badge badge-go':'badge badge-wait'}">${canBuy?'→ купить '+units+' '+b.code:need>0?'нужно ещё ~'+need+' '+b.code:'копим...'}</div>
+          ${canBuy?`<button class="btn-fix" onclick="doBuy(${i})">Зафиксировать ${units} ${b.code}</button>`:''}
+        </div>
+        <div class="basket-right">
+          <div class="basket-amount">${DATA.baskets[i].saved} ${b.code}</div>
+          <div class="basket-conv">≈ ${savedInGoal} ${gc}</div>
+        </div>
+      </div>
+    </div>`;
+  }).join('')||'<div class="empty">Нет корзин</div>';
+
+  if(Object.keys(RATES).length===0){
+    document.getElementById('rates-wrap').innerHTML='<div style="font-size:12px;color:var(--red);text-align:center;padding:8px">Нет соединения — курсы не загружены</div>';
+  } else {
+    const cols=Math.min(CFG.baskets.length,4);
+    document.getElementById('rates-wrap').innerHTML=`<div class="rates-grid" style="grid-template-columns:repeat(${cols},1fr)">`+
+      CFG.baskets.map(b=>{
+        const rate=convert(1,b.code,CFG.baseCurrency);
+        return`<div class="rate-cell"><div class="rate-name">1 ${b.code}</div><div class="rate-val">${fmtD(rate,2)} ${CFG.baseCurrency}</div></div>`;
+      }).join('')+'</div>';
+  }
+  document.getElementById('rates-date').textContent=ratesDate
+    ?'Курсы от '+new Date(ratesDate).toLocaleDateString('ru'):'Загружаем...';
+
+  const items=DATA.history.slice().reverse();
+  document.getElementById('hist').innerHTML=items.length?items.map((h,ri)=>{
+    const i=DATA.history.length-1-ri;
+    const fixedStr=(h.fixed||[]).map((f,bi)=>f>0?`${f} ${CFG.baskets[bi]?.code||''}`:'').filter(Boolean).join(', ');
+    if(editingIdx===i) return`<div class="hist-row">
+      <div class="hist-top">
+        <div class="hist-info"><div class="hist-date">${h.date}</div><div class="hist-amount">${fmtD(h.amount,0)} ${CFG.baseCurrency}</div></div>
+        <button class="btn-gray" style="padding:6px 10px;font-size:12px" onclick="cancelEdit()">Отмена</button>
+      </div>
+      <div class="edit-block">
+        <div class="edit-note">⚠️ Зафиксированные покупки с этой записи будут убраны и пересчитаны</div>
+        <input class="edit-inp" type="number" id="edit-inp-${i}" value="${h.amount}" inputmode="decimal">
+        <div class="edit-row"><button class="btn-green" onclick="saveEdit(${i})">Пересчитать</button></div>
+      </div>
+    </div>`;
+    return`<div class="hist-row">
+      <div class="hist-top">
+        <div class="hist-info">
+          <div class="hist-date">${h.date}</div>
+          <div class="hist-amount">${fmtD(h.amount,0)} ${CFG.baseCurrency} · −${fmtD(h.amount*CFG.pct/100,0)} в корзины</div>
+          <div class="hist-fixed">${fixedStr?'Зафиксировано: '+fixedStr:'Не зафиксировано'}</div>
+        </div>
+        <div class="hist-actions">
+          <button class="btn-sm" onclick="startEdit(${i})">✏️</button>
+          <button class="btn-sm-red" onclick="delEntry(${i})">✕</button>
+        </div>
+      </div>
+    </div>`;
+  }).join(''):'<div class="empty">Пока пусто</div>';
+}
+
+// ============================================================
+// ACTIONS
+// ============================================================
+function addPay() {
+  if(!CFG) return;
+  const v=parseFloat(document.getElementById('pay-inp').value);
+  const msg=document.getElementById('msg');
+  if(!v||v<=0){msg.textContent='Введи сумму';msg.className='msg-box';return;}
+  ensureBaskets();
+  const total=v*CFG.pct/100;
+  const part=total/CFG.baskets.length;
+  DATA.baskets.forEach(b=>b.pending+=part);
+  DATA.history.push({date:new Date().toLocaleDateString('ru'),amount:v,partPerBasket:part,fixed:CFG.baskets.map(()=>0)});
+  document.getElementById('pay-inp').value='';
+  msg.className='msg-box ok';
+  msg.innerHTML=`${fmt(v)} ${CFG.baseCurrency} → <b style="color:var(--green)">+${fmtD(total,0)} (${CFG.pct}%)</b> · по ${fmtD(part,2)} в каждую корзину`;
+  save(); render();
+}
+
+function doBuy(i) {
+  const b=CFG.baskets[i];
+  const units=unitsFromPending(i);
+  if(units<b.threshold) return;
+  const cost=convert(1,b.code,CFG.baseCurrency);
+  DATA.baskets[i].saved+=units;
+  DATA.baskets[i].pending=Math.max(DATA.baskets[i].pending-units*cost,0);
+  const last=DATA.history[DATA.history.length-1];
+  if(last){if(!last.fixed)last.fixed=CFG.baskets.map(()=>0);while(last.fixed.length<CFG.baskets.length)last.fixed.push(0);last.fixed[i]=(last.fixed[i]||0)+units;}
+  const msg=document.getElementById('msg');
+  msg.className='msg-box ok';msg.innerHTML=`<b style="color:var(--green)">✓ +${units} ${b.code} зафиксировано</b>`;
+  save(); render();
+}
+
+function startEdit(i){editingIdx=i;render();setTimeout(()=>{const el=document.getElementById('edit-inp-'+i);if(el)el.focus();},50);}
+function cancelEdit(){editingIdx=null;render();}
+
+function saveEdit(i) {
+  const el=document.getElementById('edit-inp-'+i);
+  const v=parseFloat(el.value);
+  if(!v||v<=0) return;
+  const h=DATA.history[i];
+  const oldPart=h.partPerBasket||h.amount*CFG.pct/100/CFG.baskets.length;
+  const newPart=v*CFG.pct/100/CFG.baskets.length;
+  const diff=newPart-oldPart;
+  if(!h.fixed) h.fixed=CFG.baskets.map(()=>0);
+  ensureBaskets();
+  h.fixed.forEach((f,bi)=>{
+    if(!CFG.baskets[bi]) return;
+    const cost=convert(1,CFG.baskets[bi].code,CFG.baseCurrency);
+    DATA.baskets[bi].saved=Math.max(DATA.baskets[bi].saved-f,0);
+    DATA.baskets[bi].pending+=f*cost;
+  });
+  DATA.baskets.forEach(b=>{b.pending=Math.max(b.pending+diff,0);});
+  h.amount=v;h.partPerBasket=newPart;h.fixed=CFG.baskets.map(()=>0);
+  editingIdx=null;
+  const msg=document.getElementById('msg');msg.className='msg-box warn';msg.innerHTML=`<b style="color:var(--amber)">↺ Обновлено — зафикси покупки заново</b>`;
+  save(); render();
+}
+
+function delEntry(i) {
+  const h=DATA.history[i];
+  const part=h.partPerBasket||h.amount*CFG.pct/100/CFG.baskets.length;
+  if(!h.fixed) h.fixed=CFG.baskets.map(()=>0);
+  ensureBaskets();
+  h.fixed.forEach((f,bi)=>{
+    if(!CFG.baskets[bi]) return;
+    const cost=convert(1,CFG.baskets[bi].code,CFG.baseCurrency);
+    DATA.baskets[bi].saved=Math.max(DATA.baskets[bi].saved-f,0);
+    DATA.baskets[bi].pending=Math.max(DATA.baskets[bi].pending+f*cost-part,0);
+  });
+  DATA.baskets.forEach(b=>{b.pending=Math.max(b.pending-part,0);});
+  DATA.history.splice(i,1);editingIdx=null;
+  document.getElementById('msg').className='msg-box ok';document.getElementById('msg').textContent='Запись удалена';
+  save(); render();
+}
+
+function resetData() {
+  if(!confirm('Сбросить накопления и историю?\nНастройки сохранятся.')) return;
+  DATA={baskets:CFG?CFG.baskets.map(()=>({pending:0,saved:0})):[],history:[]};
+  editingIdx=null;save();
+  document.getElementById('msg').className='msg-box';document.getElementById('msg').textContent='Данные сброшены.';
+  render();
+}
+
+// ============================================================
+// SETTINGS
+// ============================================================
+function openSettings(firstTime=false) {
+  isFirstSetup=firstTime;
+  document.getElementById('btn-back-settings').style.display=firstTime?'none':'flex';
+
+  const cur=CFG||{appName:'',pct:10,baseCurrency:'RUB',goalCurrency:'EUR',baskets:[],goals:[]};
+  document.getElementById('s-name').value=cur.appName||'';
+  document.getElementById('s-pct').value=cur.pct||10;
+  buildSelect('s-base', cur.baseCurrency||'RUB');
+  buildSelect('s-goal-cur', cur.goalCurrency||'EUR');
+
+  edBaskets=cur.baskets.length?cur.baskets.map(b=>({...b})):[{name:'',code:'USD',threshold:1}];
+  edGoals=cur.goals.length?cur.goals.map(g=>({...g})):[{name:'',amount:10000,icon:'🎯'}];
+  rebuildBasketsEd();
+  rebuildGoalsEd();
+
+  document.getElementById('screen-main').classList.remove('active');
+  document.getElementById('screen-settings').classList.add('active');
+  window.scrollTo(0,0);
+}
+
+function closeSettings() {
+  if(isFirstSetup&&!CFG) return; // can't close without saving on first setup
+  document.getElementById('screen-settings').classList.remove('active');
+  document.getElementById('screen-main').classList.add('active');
+  window.scrollTo(0,0);
+}
+
+function rebuildBasketsEd() {
+  document.getElementById('baskets-ed').innerHTML=edBaskets.map((b,i)=>`
+    <div class="basket-ed">
+      ${edBaskets.length>1?`<button class="btn-rm" onclick="rmBasket(${i})">✕</button>`:''}
+      <div class="basket-ed-title">Корзина ${i+1}</div>
+      <div class="be-row">
+        <div class="be-label">Название</div>
+        <input type="text" id="be-name-${i}" class="s-text-inp" value="${b.name}" placeholder="Например: Евро наличные">
+      </div>
+      <div class="be-2col" style="margin-top:10px">
+        <div>
+          <div class="be-label">Валюта</div>
+          ${inlineSelect('be-code-'+i, b.code)}
+        </div>
+        <div>
+          <div class="be-label">Порог покупки</div>
+          <input type="number" id="be-thr-${i}" class="s-num-inp" value="${b.threshold}" min="1" style="width:100%">
+        </div>
+      </div>
+    </div>`).join('');
+  document.getElementById('btn-add-basket').style.display=edBaskets.length>=5?'none':'block';
+}
+
+function rebuildGoalsEd() {
+  document.getElementById('goals-ed').innerHTML=edGoals.map((g,i)=>`
+    <div class="goal-ed">
+      ${edGoals.length>1?`<button class="btn-rm" onclick="rmGoal(${i})">✕</button>`:''}
+      <div class="goal-ed-title">Цель ${i+1}</div>
+      <div class="be-row">
+        <div class="ge-label">Название</div>
+        <input type="text" id="ge-name-${i}" class="s-text-inp" value="${g.name}" placeholder="Например: На квартиру">
+      </div>
+      <div class="be-2col" style="margin-top:10px">
+        <div>
+          <div class="ge-label">Сумма</div>
+          <input type="number" id="ge-amt-${i}" class="s-num-inp" value="${g.amount||''}" placeholder="10000" min="1" style="width:100%">
+        </div>
+        <div>
+          <div class="ge-label">Иконка</div>
+          <input type="text" id="ge-icon-${i}" class="s-num-inp" value="${g.icon||'🎯'}" maxlength="4" style="width:100%;text-align:center;font-size:20px;padding:9px 4px">
+        </div>
+      </div>
+    </div>`).join('');
+  document.getElementById('btn-add-goal').style.display=edGoals.length>=5?'none':'block';
+}
+
+function addBasketEd(){if(edBaskets.length>=5)return;edBaskets.push({name:'',code:'USD',threshold:1});rebuildBasketsEd();}
+function rmBasket(i){if(edBaskets.length<=1)return;edBaskets.splice(i,1);rebuildBasketsEd();}
+function addGoalEd(){if(edGoals.length>=5)return;edGoals.push({name:'',amount:'',icon:'🎯'});rebuildGoalsEd();}
+function rmGoal(i){if(edGoals.length<=1)return;edGoals.splice(i,1);rebuildGoalsEd();}
+
+function saveSettings() {
+  const newBaskets=edBaskets.map((_,i)=>({
+    name:document.getElementById(`be-name-${i}`)?.value.trim()||'Корзина '+(i+1),
+    code:document.getElementById(`be-code-${i}`)?.value||'USD',
+    threshold:Math.max(1,parseInt(document.getElementById(`be-thr-${i}`)?.value)||1)
+  }));
+  const newGoals=edGoals.map((_,i)=>({
+    name:document.getElementById(`ge-name-${i}`)?.value.trim()||'Цель '+(i+1),
+    amount:Math.max(1,parseFloat(document.getElementById(`ge-amt-${i}`)?.value)||1000),
+    icon:document.getElementById(`ge-icon-${i}`)?.value.trim()||'🎯'
+  })).sort((a,b)=>a.amount-b.amount);
+
+  const pct=Math.max(0.5,Math.min(100,parseFloat(document.getElementById('s-pct').value)||10));
+  if(pct<=0){alert('Укажи процент откладывания');return;}
+
+  CFG={
+    appName:document.getElementById('s-name').value.trim()||'копилка',
+    pct,
+    baseCurrency:document.getElementById('s-base').value,
+    goalCurrency:document.getElementById('s-goal-cur').value,
+    baskets:newBaskets,
+    goals:newGoals
+  };
+
+  ensureBaskets();
+  save();
+  document.getElementById('screen-settings').classList.remove('active');
+  document.getElementById('screen-main').classList.add('active');
+  window.scrollTo(0,0);
+  fetchRates().then(render);
+}
+
+// ============================================================
+// INIT
+// ============================================================
+load();
+if(!CFG) {
+  // First time — go straight to settings
+  openSettings(true);
+} else {
+  ensureBaskets();
+  fetchRates().then(render);
+}
+document.getElementById('pay-inp').addEventListener('keydown',e=>{if(e.key==='Enter')addPay();});
+</script>
+</body>
+</html>
