@@ -14,13 +14,12 @@
   *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
   body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding-bottom:60px}
   .screen{display:none}.screen.active{display:block}
+  .hidden{display:none!important}
   header{padding:20px 20px 0;display:flex;justify-content:space-between;align-items:center}
   .logo{font-family:'Unbounded',sans-serif;font-size:11px;font-weight:600;color:var(--muted);letter-spacing:.15em;text-transform:uppercase}
   .btn-icon{background:none;border:1px solid var(--border);border-radius:50%;width:36px;height:36px;color:var(--muted);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center}
   .btn-icon:active{background:var(--surface2)}
   .main{padding:16px 20px}
-
-  /* TOTAL */
   .total-card{background:linear-gradient(135deg,#0d1f14 0%,#0a1a20 100%);border:1px solid #1a3a22;border-radius:var(--radius);padding:24px;margin-bottom:12px}
   .total-label{font-family:'Unbounded',sans-serif;font-size:9px;letter-spacing:.18em;color:#00e67699;text-transform:uppercase;margin-bottom:8px}
   .total-amount{font-family:'Unbounded',sans-serif;font-size:36px;font-weight:700;color:var(--green);letter-spacing:-.02em;line-height:1;margin-bottom:6px}
@@ -37,10 +36,8 @@
   .goal-name{font-size:13px;color:var(--text)}
   .goal-right{font-size:12px;color:var(--muted);text-align:right}
   .goal-right.done{color:var(--green);font-weight:500}
-
   .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:12px}
   .card-title{font-family:'Unbounded',sans-serif;font-size:10px;letter-spacing:.12em;color:var(--muted);text-transform:uppercase;margin-bottom:16px}
-
   .inp-wrap{position:relative;margin-bottom:12px}
   .inp-suffix{position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:13px;color:var(--muted);pointer-events:none;font-family:'Unbounded',sans-serif;font-weight:600}
   input[type=number]{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font-family:'Unbounded',sans-serif;font-size:24px;font-weight:600;padding:14px 80px 14px 16px;outline:none;-moz-appearance:textfield}
@@ -51,7 +48,6 @@
   .msg-box{margin-top:12px;padding:12px 14px;background:var(--surface2);border-radius:var(--radius-sm);font-size:13px;color:var(--muted);min-height:42px;border-left:3px solid var(--border)}
   .msg-box.ok{border-left-color:var(--green);color:var(--text)}
   .msg-box.warn{border-left-color:var(--amber);color:var(--text)}
-
   .basket-item{padding:16px 0;border-bottom:1px solid var(--border)}
   .basket-item:last-child{border-bottom:none}
   .basket-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
@@ -66,12 +62,10 @@
   .badge-wait{background:#ffffff08;color:var(--hint)}
   .btn-fix{margin-top:8px;padding:8px 16px;background:var(--green-dim);color:var(--green);border:1px solid #00e67630;border-radius:var(--radius-sm);font-family:'Unbounded',sans-serif;font-size:11px;font-weight:600;cursor:pointer;display:block}
   .btn-fix:active{opacity:.8}
-
   .rates-grid{display:grid;gap:8px}
   .rate-cell{background:var(--surface2);border-radius:var(--radius-sm);padding:10px 12px;text-align:center}
   .rate-name{font-size:10px;color:var(--hint);margin-bottom:4px}
   .rate-val{font-family:'Unbounded',sans-serif;font-size:12px;font-weight:600;color:var(--amber)}
-
   .hist-list{max-height:300px;overflow-y:auto}
   .hist-list::-webkit-scrollbar{width:3px}
   .hist-list::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
@@ -94,8 +88,6 @@
   .btn-gray{flex:1;padding:9px;background:#ffffff08;border:1px solid var(--border);color:var(--muted);border-radius:8px;font-size:12px;cursor:pointer}
   .btn-reset{width:100%;padding:12px;background:transparent;border:1px solid #ff444420;color:var(--red);border-radius:var(--radius-sm);font-size:12px;cursor:pointer;margin-top:8px}
   .empty{font-size:12px;color:var(--hint);text-align:center;padding:16px 0}
-
-  /* SETTINGS */
   .settings-wrap{padding:20px}
   .settings-hdr{display:flex;align-items:center;gap:12px;margin-bottom:24px}
   .settings-ttl{font-family:'Unbounded',sans-serif;font-size:16px;font-weight:700;color:var(--text)}
@@ -113,11 +105,9 @@
   .s-num-inp::-webkit-outer-spin-button,.s-num-inp::-webkit-inner-spin-button{-webkit-appearance:none}
   .s-num-inp:focus{border-color:var(--green)}
   .hint-txt{font-size:11px;color:var(--hint);margin-top:6px;line-height:1.5}
-
   select{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font-size:14px;font-family:'Inter',sans-serif;padding:11px 36px 11px 14px;outline:none;appearance:none;-webkit-appearance:none;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23666' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center}
   select:focus{border-color:var(--green)}
   select option{background:#1c1c1c;color:var(--text)}
-
   .basket-ed{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px;margin-bottom:10px;position:relative}
   .basket-ed-title{font-size:12px;font-weight:600;color:var(--text);margin-bottom:12px;padding-right:44px}
   .btn-rm{position:absolute;top:12px;right:12px;background:#ff444415;border:1px solid #ff444430;color:var(--red);border-radius:6px;font-size:11px;padding:5px 9px;cursor:pointer}
@@ -125,42 +115,86 @@
   .be-row:last-child{margin-bottom:0}
   .be-label{font-size:11px;color:var(--hint);margin-bottom:5px}
   .be-2col{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:0}
-
   .goal-ed{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px;margin-bottom:10px;position:relative}
   .goal-ed-title{font-size:12px;font-weight:600;color:var(--text);margin-bottom:12px;padding-right:44px}
   .ge-label{font-size:11px;color:var(--hint);margin-bottom:5px}
-
   .btn-add-item{width:100%;padding:11px;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--muted);font-size:13px;cursor:pointer;margin-top:4px}
   .btn-add-item:active{background:var(--bg)}
   .btn-save-s{width:100%;padding:16px;background:var(--green);color:#000;border:none;border-radius:var(--radius-sm);font-family:'Unbounded',sans-serif;font-size:13px;font-weight:700;cursor:pointer;margin-top:4px}
   .btn-save-s:active{opacity:.85}
-
-  /* inline select for basket editors */
   .be-select{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:13px;font-family:'Inter',sans-serif;padding:9px 32px 9px 10px;outline:none;appearance:none;-webkit-appearance:none;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='7' viewBox='0 0 10 7'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23666' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center}
   .be-select:focus{border-color:var(--green)}
   .be-select option{background:#1c1c1c}
+
+  /* ONBOARDING */
+  .ob-wrap{min-height:100vh;display:flex;flex-direction:column;padding:24px 24px 40px}
+  .ob-progress{display:flex;gap:6px;margin-bottom:32px}
+  .ob-step{flex:1;height:3px;border-radius:2px;background:var(--border);transition:background .3s}
+  .ob-step.done{background:var(--green)}
+  .ob-step.active{background:var(--green);opacity:.5}
+  .ob-icon{font-size:48px;margin-bottom:16px;line-height:1}
+  .ob-title{font-family:'Unbounded',sans-serif;font-size:20px;font-weight:700;color:var(--text);margin-bottom:10px;line-height:1.3}
+  .ob-desc{font-size:14px;color:var(--muted);margin-bottom:32px;line-height:1.6}
+  .ob-body{flex:1}
+  .ob-footer{margin-top:24px}
+  .ob-label{font-size:12px;color:var(--hint);margin-bottom:8px}
+  .ob-text-inp{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font-family:'Unbounded',sans-serif;font-size:22px;font-weight:600;padding:16px;outline:none}
+  .ob-text-inp:focus{border-color:var(--green)}
+  .ob-select{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font-size:15px;font-family:'Inter',sans-serif;padding:14px 36px 14px 16px;outline:none;appearance:none;-webkit-appearance:none;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23666' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;margin-bottom:12px}
+  .ob-select:focus{border-color:var(--green)}
+  .ob-select option{background:#1c1c1c}
+  .ob-pct-wrap{display:flex;align-items:center;gap:12px}
+  .ob-pct-inp{flex:1;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font-family:'Unbounded',sans-serif;font-size:32px;font-weight:700;padding:16px;outline:none;text-align:center;-moz-appearance:textfield}
+  .ob-pct-inp::-webkit-outer-spin-button,.ob-pct-inp::-webkit-inner-spin-button{-webkit-appearance:none}
+  .ob-pct-inp:focus{border-color:var(--green)}
+  .ob-pct-sign{font-family:'Unbounded',sans-serif;font-size:28px;font-weight:700;color:var(--green)}
+  .ob-pct-hint{font-size:12px;color:var(--hint);margin-top:10px;line-height:1.5}
+  .ob-goals-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+  .ob-goal-card{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px;cursor:pointer;transition:border-color .2s,background .2s;text-align:center}
+  .ob-goal-card.selected{border-color:var(--green);background:var(--green-soft)}
+  .ob-goal-card:active{opacity:.8}
+  .ob-goal-emoji{font-size:28px;margin-bottom:6px}
+  .ob-goal-name{font-size:13px;color:var(--text);font-weight:500}
+  .ob-goal-custom{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font-size:14px;font-family:'Inter',sans-serif;padding:12px 14px;outline:none;margin-bottom:8px}
+  .ob-goal-custom:focus{border-color:var(--green)}
+  .ob-baskets-list{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
+  .ob-basket-row{display:flex;align-items:center;gap:10px;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px 14px;cursor:pointer;transition:border-color .2s,background .2s}
+  .ob-basket-row.selected{border-color:var(--green);background:var(--green-soft)}
+  .ob-basket-code{font-family:'Unbounded',sans-serif;font-size:13px;font-weight:600;color:var(--green);width:48px}
+  .ob-basket-name{font-size:13px;color:var(--muted);flex:1}
+  .ob-basket-check{font-size:16px;color:var(--green);opacity:0;transition:opacity .2s}
+  .ob-basket-row.selected .ob-basket-check{opacity:1}
+  .ob-finish-icon{font-size:72px;text-align:center;margin-bottom:20px}
+  .ob-finish-title{font-family:'Unbounded',sans-serif;font-size:22px;font-weight:700;color:var(--green);text-align:center;margin-bottom:12px}
+  .ob-finish-desc{font-size:14px;color:var(--muted);text-align:center;line-height:1.7;margin-bottom:32px}
+  .ob-btn{width:100%;padding:16px;background:var(--green);color:#000;border:none;border-radius:var(--radius-sm);font-family:'Unbounded',sans-serif;font-size:14px;font-weight:700;cursor:pointer;margin-top:8px}
+  .ob-btn:active{opacity:.85;transform:scale(.98)}
+  .ob-btn-back{width:100%;padding:14px;background:transparent;color:var(--muted);border:1px solid var(--border);border-radius:var(--radius-sm);font-size:14px;cursor:pointer;margin-top:8px}
+  .ob-hint{font-size:11px;color:var(--hint);text-align:center;margin-top:12px;line-height:1.5}
+  .ob-goal-amount-row{display:flex;align-items:center;gap:10px;margin-top:12px;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px 14px}
+  .ob-goal-amount-label{font-size:12px;color:var(--hint);flex:1}
+  .ob-goal-amount-inp{width:120px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'Unbounded',sans-serif;font-size:16px;font-weight:600;padding:8px 12px;outline:none;text-align:center;-moz-appearance:textfield}
+  .ob-goal-amount-inp::-webkit-outer-spin-button,.ob-goal-amount-inp::-webkit-inner-spin-button{-webkit-appearance:none}
+  .ob-goal-amount-inp:focus{border-color:var(--green)}
 </style>
 </head>
 <body>
 
+<!-- ONBOARDING -->
+<div class="screen active" id="screen-onboarding">
+  <div class="ob-wrap">
+    <div class="ob-progress" id="ob-progress"></div>
+    <div id="ob-content"></div>
+  </div>
+</div>
+
 <!-- MAIN -->
-<div class="screen active" id="screen-main">
+<div class="screen" id="screen-main">
   <header>
     <div class="logo" id="hdr-name">копилка</div>
     <button class="btn-icon" onclick="openSettings()">⚙️</button>
   </header>
   <div class="main">
-
-    <!-- empty state -->
-    <div id="empty-state" class="hidden">
-      <div style="text-align:center;padding:60px 20px">
-        <div style="font-size:48px;margin-bottom:16px">🪙</div>
-        <div style="font-family:'Unbounded',sans-serif;font-size:16px;font-weight:700;color:var(--text);margin-bottom:10px">Настрой копилку</div>
-        <div style="font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:28px">Выбери валюты, процент откладывания и свои финансовые цели</div>
-        <button class="btn-add" onclick="openSettings()" style="max-width:260px;margin:0 auto;display:block">Настроить</button>
-      </div>
-    </div>
-
     <div id="main-content">
       <div class="total-card">
         <div class="total-label">Общая подушка</div>
@@ -172,7 +206,6 @@
         <div class="prog-labels" id="prog-labels"></div>
         <div class="goals" id="goals-list"></div>
       </div>
-
       <div class="card">
         <div class="card-title">Добавить выплату</div>
         <div class="inp-wrap">
@@ -182,30 +215,25 @@
         <button class="btn-add" onclick="addPay()">+ <span id="pct-lbl">10</span>% в корзины</button>
         <div class="msg-box" id="msg">Введи сумму выплаты</div>
       </div>
-
       <div class="card">
         <div class="card-title">Корзины</div>
         <div id="baskets-list"></div>
       </div>
-
       <div class="card">
         <div class="card-title">Курсы</div>
         <div id="rates-wrap"></div>
         <div style="font-size:11px;color:var(--hint);margin-top:10px;text-align:center" id="rates-date"></div>
       </div>
-
       <div class="card">
         <div class="card-title">История</div>
         <div class="hist-list" id="hist"></div>
       </div>
-
       <div class="card">
         <div class="card-title" style="color:#ff444455">Сброс</div>
         <div style="font-size:12px;color:var(--hint);margin-bottom:4px">Удалит накопления и историю. Настройки сохранятся.</div>
         <button class="btn-reset" onclick="resetData()">Сбросить накопления</button>
       </div>
     </div>
-
   </div>
 </div>
 
@@ -216,7 +244,6 @@
       <button class="btn-icon" id="btn-back-settings" onclick="closeSettings()">←</button>
       <div class="settings-ttl">Настройки</div>
     </div>
-
     <div class="scard">
       <div class="scard-title">Общее</div>
       <div class="sfield">
@@ -237,19 +264,16 @@
         <select id="s-goal-cur"></select>
       </div>
     </div>
-
     <div class="scard">
       <div class="scard-title">Корзины (до 5)</div>
       <div id="baskets-ed"></div>
       <button class="btn-add-item" id="btn-add-basket" onclick="addBasketEd()">+ Добавить корзину</button>
     </div>
-
     <div class="scard">
       <div class="scard-title">Цели (до 5)</div>
       <div id="goals-ed"></div>
       <button class="btn-add-item" id="btn-add-goal" onclick="addGoalEd()">+ Добавить цель</button>
     </div>
-
     <button class="btn-save-s" onclick="saveSettings()">Сохранить</button>
     <div style="height:40px"></div>
   </div>
@@ -281,9 +305,6 @@ const CURRENCIES=[
   {code:'ETH',name:'Ethereum'},
 ];
 
-const OPTS = CURRENCIES.map(c=>`<option value="${c.code}">${c.code} — ${c.name}</option>`).join('');
-const OPTS_BG = CURRENCIES.map(c=>`<option value="${c.code}" style="background:#1c1c1c">${c.code} — ${c.name}</option>`).join('');
-
 function buildSelect(id, selected) {
   const el=document.getElementById(id);
   if(!el) return;
@@ -296,18 +317,288 @@ function inlineSelect(id, selected) {
     `</select>`;
 }
 
+function buildObSelect(id, selected) {
+  return `<select id="${id}" class="ob-select">`+
+    CURRENCIES.map(c=>`<option value="${c.code}"${c.code===selected?' selected':''}>${c.code} — ${c.name}</option>`).join('')+
+    `</select>`;
+}
+
 // ============================================================
 // STATE
 // ============================================================
-let CFG = null; // null = not configured yet
+let CFG = null;
 let RATES = {};
 let ratesDate = null;
 let DATA = { baskets:[], history:[] };
 let editingIdx = null;
 let edBaskets = [];
 let edGoals = [];
-let isFirstSetup = false;
 
+// ============================================================
+// ONBOARDING STATE
+// ============================================================
+const TOTAL_STEPS = 7;
+let obStep = 0;
+let obData = {
+  appName: '',
+  baseCurrency: 'RUB',
+  goalCurrency: 'RUB',
+  pct: 10,
+  selectedGoals: [],
+  customGoal: '',
+  goalAmounts: {},
+  baskets: []
+};
+
+const PRESET_GOALS = [
+  {icon:'🏠', name:'На квартиру', amount:5000000},
+  {icon:'🚗', name:'На машину', amount:1500000},
+  {icon:'✈️', name:'На отпуск', amount:200000},
+  {icon:'🛡️', name:'Подушка безопасности', amount:500000},
+  {icon:'🎓', name:'На образование', amount:300000},
+  {icon:'🎯', name:'Своя цель', amount:100000},
+];
+
+const POPULAR_BASKETS = [
+  {code:'RUB', name:'Российский рубль'},
+  {code:'USD', name:'Доллар США'},
+  {code:'EUR', name:'Евро'},
+  {code:'CNY', name:'Юань'},
+  {code:'USDT', name:'USDT (Tether)'},
+  {code:'KZT', name:'Казахстанский тенге'},
+  {code:'GBP', name:'Фунт стерлингов'},
+  {code:'CHF', name:'Швейцарский франк'},
+  {code:'AED', name:'Дирхам ОАЭ'},
+  {code:'BTC', name:'Bitcoin'},
+];
+
+function renderObProgress() {
+  const el = document.getElementById('ob-progress');
+  el.innerHTML = Array.from({length: TOTAL_STEPS}, (_,i) =>
+    `<div class="ob-step ${i < obStep ? 'done' : i === obStep ? 'active' : ''}"></div>`
+  ).join('');
+}
+
+function renderObStep() {
+  renderObProgress();
+  const el = document.getElementById('ob-content');
+
+  if (obStep === 0) {
+    el.innerHTML = `
+      <div class="ob-icon">🪙</div>
+      <div class="ob-title">Привет! Давай настроим твою копилку</div>
+      <div class="ob-desc">Займёт меньше минуты. Ты сможешь откладывать % от каждой выплаты и следить за прогрессом к своим целям.</div>
+      <div class="ob-body">
+        <div class="ob-label">Как назовём копилку?</div>
+        <input type="text" id="ob-name" class="ob-text-inp" placeholder="Моя копилка" value="${obData.appName}" maxlength="20">
+        <div class="ob-hint">Имя будет отображаться в шапке приложения</div>
+      </div>
+      <div class="ob-footer">
+        <button class="ob-btn" onclick="obNext()">Далее →</button>
+      </div>`;
+  } else if (obStep === 1) {
+    el.innerHTML = `
+      <div class="ob-icon">💰</div>
+      <div class="ob-title">В чём получаешь доход?</div>
+      <div class="ob-desc">Выбери основную валюту, в которой тебе платят зарплату или другие выплаты.</div>
+      <div class="ob-body">
+        ${buildObSelect('ob-base', obData.baseCurrency)}
+      </div>
+      <div class="ob-footer">
+        <button class="ob-btn" onclick="obNext()">Далее →</button>
+        <button class="ob-btn-back" onclick="obBack()">← Назад</button>
+      </div>`;
+  } else if (obStep === 2) {
+    el.innerHTML = `
+      <div class="ob-icon">📊</div>
+      <div class="ob-title">Сколько откладываем?</div>
+      <div class="ob-desc">Процент от каждой выплаты, который будет автоматически распределяться по корзинам.</div>
+      <div class="ob-body">
+        <div class="ob-pct-wrap">
+          <input type="number" id="ob-pct" class="ob-pct-inp" value="${obData.pct}" min="1" max="100" step="1" inputmode="numeric">
+          <span class="ob-pct-sign">%</span>
+        </div>
+        <div class="ob-pct-hint">💡 Рекомендуем от 10%. Даже 5% — лучше чем ничего. Можно изменить позже.</div>
+      </div>
+      <div class="ob-footer">
+        <button class="ob-btn" onclick="obNext()">Далее →</button>
+        <button class="ob-btn-back" onclick="obBack()">← Назад</button>
+      </div>`;
+  } else if (obStep === 3) {
+    const basketsHtml = POPULAR_BASKETS.map(b => {
+      const sel = obData.baskets.includes(b.code) ? 'selected' : '';
+      return `<div class="ob-basket-row ${sel}" onclick="obToggleBasket('${b.code}')">
+        <span class="ob-basket-code">${b.code}</span>
+        <span class="ob-basket-name">${b.name}</span>
+        <span class="ob-basket-check">✓</span>
+      </div>`;
+    }).join('');
+    el.innerHTML = `
+      <div class="ob-icon">🧺</div>
+      <div class="ob-title">В каких валютах копим?</div>
+      <div class="ob-desc">Выбери одну или несколько валют. Деньги будут распределяться по этим корзинам.</div>
+      <div class="ob-body">
+        <div class="ob-baskets-list">${basketsHtml}</div>
+      </div>
+      <div class="ob-footer">
+        <button class="ob-btn" onclick="obNext()">Далее →</button>
+        <button class="ob-btn-back" onclick="obBack()">← Назад</button>
+      </div>`;
+  } else if (obStep === 4) {
+    el.innerHTML = `
+      <div class="ob-icon">🎯</div>
+      <div class="ob-title">В чём считаем общую сумму?</div>
+      <div class="ob-desc">Все корзины будут пересчитаны в эту валюту для отображения общего прогресса.</div>
+      <div class="ob-body">
+        ${buildObSelect('ob-goal-cur', obData.goalCurrency)}
+        <div class="ob-hint">По умолчанию — как валюта дохода. Измени если хочешь видеть прогресс в другой валюте (например EUR для переезда в Европу)</div>
+      </div>
+      <div class="ob-footer">
+        <button class="ob-btn" onclick="obNext()">Далее →</button>
+        <button class="ob-btn-back" onclick="obBack()">← Назад</button>
+      </div>`;
+  } else if (obStep === 5) {
+    const gc = obData.goalCurrency;
+    const isDiff = gc !== obData.baseCurrency;
+    const goalsHtml = PRESET_GOALS.map((g,i) => {
+      const sel = obData.selectedGoals.includes(i) ? 'selected' : '';
+      const amt = obData.goalAmounts[i] !== undefined ? obData.goalAmounts[i] : g.amount;
+      const amtBlock = sel ? `
+        <div style="margin-top:8px;border-top:1px solid var(--border);padding-top:8px">
+          ${i===5 ? `<input type="text" id="ob-custom-goal-${i}" class="ob-goal-custom" placeholder="Название цели" value="${obData.customGoal}" onclick="event.stopPropagation()" style="margin-bottom:8px">` : ''}
+          <div style="display:flex;align-items:center;gap:8px">
+            <span style="font-size:11px;color:var(--hint);flex:1">Сумма цели в ${gc}</span>
+            <input type="number" id="ob-amt-${i}" class="ob-goal-amount-inp" value="${amt}" inputmode="numeric" onclick="event.stopPropagation()">
+            <span style="font-size:11px;color:var(--hint)">${gc}</span>
+          </div>
+        </div>` : '';
+      return `<div class="ob-goal-card ${sel}" onclick="obToggleGoal(${i})" style="${sel?'grid-column:span 2':''}">
+        <div style="display:flex;align-items:center;gap:10px;text-align:left">
+          <span style="font-size:22px">${g.icon}</span>
+          <span class="ob-goal-name">${i===5&&obData.customGoal?obData.customGoal:g.name}</span>
+        </div>
+        ${amtBlock}
+      </div>`;
+    }).join('');
+    const diffHint = isDiff ? `<div class="ob-hint" style="margin-bottom:12px">💡 Суммы целей — в ${gc}. Приложение автоматически покажет эквивалент в ${obData.baseCurrency} по курсу.</div>` : '';
+    el.innerHTML = `
+      <div class="ob-icon">🏆</div>
+      <div class="ob-title">На что копим?</div>
+      <div class="ob-desc">Выбери цели и укажи сумму каждой в ${gc}.</div>
+      <div class="ob-body">
+        ${diffHint}
+        <div class="ob-goals-grid">${goalsHtml}</div>
+      </div>
+      <div class="ob-footer">
+        <button class="ob-btn" onclick="obNext()">Далее →</button>
+        <button class="ob-btn-back" onclick="obBack()">← Назад</button>
+      </div>`;
+  } else if (obStep === 6) {
+    el.innerHTML = `
+      <div class="ob-finish-icon">🚀</div>
+      <div class="ob-finish-title">Всё готово!</div>
+      <div class="ob-finish-desc">Копилка настроена. Теперь вводи свои выплаты и смотри как растут накопления к твоим целям.</div>
+      <div class="ob-footer">
+        <button class="ob-btn" onclick="obFinish()">Начать копить!</button>
+      </div>`;
+  }
+}
+
+function obToggleGoal(i) {
+  const idx = obData.selectedGoals.indexOf(i);
+  if (idx >= 0) obData.selectedGoals.splice(idx, 1);
+  else obData.selectedGoals.push(i);
+  renderObStep();
+}
+
+function obToggleBasket(code) {
+  const idx = obData.baskets.indexOf(code);
+  if (idx >= 0) obData.baskets.splice(idx, 1);
+  else obData.baskets.push(code);
+  renderObStep();
+}
+
+function obSaveStep() {
+  if (obStep === 0) {
+    const v = document.getElementById('ob-name')?.value.trim();
+    obData.appName = v || 'Копилка';
+  } else if (obStep === 1) {
+    obData.baseCurrency = document.getElementById('ob-base')?.value || 'RUB';
+  } else if (obStep === 2) {
+    const v = parseFloat(document.getElementById('ob-pct')?.value);
+    obData.pct = (!v || v <= 0) ? 10 : Math.min(100, v);
+  } else if (obStep === 4) {
+    obData.goalCurrency = document.getElementById('ob-goal-cur')?.value || 'RUB';
+  } else if (obStep === 5) {
+    obData.selectedGoals.forEach(i => {
+      const el = document.getElementById(`ob-amt-${i}`);
+      if (el) {
+        const v = parseFloat(el.value);
+        obData.goalAmounts[i] = (!v || v <= 0) ? PRESET_GOALS[i].amount : v;
+      }
+      if (i === 5) {
+        const cel = document.getElementById(`ob-custom-goal-${i}`);
+        if (cel) obData.customGoal = cel.value.trim() || '';
+      }
+    });
+  }
+}
+
+function obNext() {
+  obSaveStep();
+  if (obStep === 3 && obData.baskets.length === 0) {
+    alert('Выбери хотя бы одну валюту для корзины');
+    return;
+  }
+  if (obStep === 5 && obData.selectedGoals.length === 0) {
+    alert('Выбери хотя бы одну цель');
+    return;
+  }
+  obStep++;
+  renderObStep();
+  window.scrollTo(0, 0);
+}
+
+function obBack() {
+  obSaveStep();
+  obStep--;
+  renderObStep();
+  window.scrollTo(0, 0);
+}
+
+function obFinish() {
+  const goals = obData.selectedGoals.map(i => {
+    const preset = PRESET_GOALS[i];
+    const name = i === 5 ? (obData.customGoal || 'Своя цель') : preset.name;
+    const amount = obData.goalAmounts[i] !== undefined ? obData.goalAmounts[i] : preset.amount;
+    return { name, amount, icon: preset.icon };
+  });
+
+  const baskets = obData.baskets.map(code => {
+    const cur = CURRENCIES.find(c => c.code === code);
+    return { name: cur ? cur.name : code, code, threshold: 1 };
+  });
+
+  CFG = {
+    appName: obData.appName || 'Копилка',
+    pct: obData.pct,
+    baseCurrency: obData.baseCurrency,
+    goalCurrency: obData.goalCurrency,
+    baskets,
+    goals
+  };
+
+  ensureBaskets();
+  save();
+  document.getElementById('screen-onboarding').classList.remove('active');
+  document.getElementById('screen-main').classList.add('active');
+  window.scrollTo(0, 0);
+  fetchRates().then(render);
+}
+
+// ============================================================
+// PERSIST
+// ============================================================
 function save() {
   try {
     if(CFG) localStorage.setItem('sv_cfg', JSON.stringify(CFG));
@@ -373,14 +664,7 @@ function fmt(n){return Math.round(n).toLocaleString('ru');}
 function fmtD(n,d=2){return parseFloat(n.toFixed(d)).toLocaleString('ru');}
 
 function render() {
-  if(!CFG) {
-    document.getElementById('empty-state').classList.remove('hidden');
-    document.getElementById('main-content').classList.add('hidden');
-    return;
-  }
-  document.getElementById('empty-state').classList.add('hidden');
-  document.getElementById('main-content').classList.remove('hidden');
-
+  if(!CFG) return;
   ensureBaskets();
   const total=totalInGoalCurrency();
   const goals=[...CFG.goals].sort((a,b)=>a.amount-b.amount);
@@ -390,7 +674,6 @@ function render() {
   document.getElementById('hdr-name').textContent=CFG.appName||'копилка';
   document.getElementById('pct-lbl').textContent=CFG.pct;
   document.getElementById('pay-suffix').textContent=CFG.baseCurrency;
-
   document.getElementById('total-val').textContent=fmtD(total,0)+' '+gc;
   const next=goals.find(g=>g.amount>total);
   document.getElementById('total-sub').textContent=next
@@ -411,7 +694,9 @@ function render() {
     const done=total>=g.amount;
     return`<div class="goal-row${done?' done':''}">
       <div class="goal-left"><span style="font-size:18px">${g.icon||'🎯'}</span><span class="goal-name">${g.name}</span></div>
-      <div class="goal-right${done?' done':''}">${done?'✓ Достигнуто':fmtD(Math.max(g.amount-total,0),0)+' '+gc+' осталось'}</div>
+      <div class="goal-right${done?' done':''}">
+        ${done?'✓ Достигнуто':`${fmtD(Math.max(g.amount-total,0),0)} ${gc} осталось${gc!==CFG.baseCurrency?`<br><span style="font-size:10px;color:var(--hint)">≈ ${fmtD(convert(Math.max(g.amount-total,0),gc,CFG.baseCurrency),0)} ${CFG.baseCurrency}</span>`:''}`}
+      </div>
     </div>`;
   }).join(''):'';
 
@@ -567,28 +852,22 @@ function resetData() {
 // ============================================================
 // SETTINGS
 // ============================================================
-function openSettings(firstTime=false) {
-  isFirstSetup=firstTime;
-  document.getElementById('btn-back-settings').style.display=firstTime?'none':'flex';
-
+function openSettings() {
   const cur=CFG||{appName:'',pct:10,baseCurrency:'RUB',goalCurrency:'EUR',baskets:[],goals:[]};
   document.getElementById('s-name').value=cur.appName||'';
   document.getElementById('s-pct').value=cur.pct||10;
   buildSelect('s-base', cur.baseCurrency||'RUB');
   buildSelect('s-goal-cur', cur.goalCurrency||'EUR');
-
   edBaskets=cur.baskets.length?cur.baskets.map(b=>({...b})):[{name:'',code:'USD',threshold:1}];
   edGoals=cur.goals.length?cur.goals.map(g=>({...g})):[{name:'',amount:10000,icon:'🎯'}];
   rebuildBasketsEd();
   rebuildGoalsEd();
-
   document.getElementById('screen-main').classList.remove('active');
   document.getElementById('screen-settings').classList.add('active');
   window.scrollTo(0,0);
 }
 
 function closeSettings() {
-  if(isFirstSetup&&!CFG) return; // can't close without saving on first setup
   document.getElementById('screen-settings').classList.remove('active');
   document.getElementById('screen-main').classList.add('active');
   window.scrollTo(0,0);
@@ -656,10 +935,7 @@ function saveSettings() {
     amount:Math.max(1,parseFloat(document.getElementById(`ge-amt-${i}`)?.value)||1000),
     icon:document.getElementById(`ge-icon-${i}`)?.value.trim()||'🎯'
   })).sort((a,b)=>a.amount-b.amount);
-
   const pct=Math.max(0.5,Math.min(100,parseFloat(document.getElementById('s-pct').value)||10));
-  if(pct<=0){alert('Укажи процент откладывания');return;}
-
   CFG={
     appName:document.getElementById('s-name').value.trim()||'копилка',
     pct,
@@ -668,7 +944,6 @@ function saveSettings() {
     baskets:newBaskets,
     goals:newGoals
   };
-
   ensureBaskets();
   save();
   document.getElementById('screen-settings').classList.remove('active');
@@ -682,9 +957,10 @@ function saveSettings() {
 // ============================================================
 load();
 if(!CFG) {
-  // First time — go straight to settings
-  openSettings(true);
+  renderObStep();
 } else {
+  document.getElementById('screen-onboarding').classList.remove('active');
+  document.getElementById('screen-main').classList.add('active');
   ensureBaskets();
   fetchRates().then(render);
 }
